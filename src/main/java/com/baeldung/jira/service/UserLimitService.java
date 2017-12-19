@@ -1,5 +1,6 @@
 package com.baeldung.jira.service;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,10 @@ import org.springframework.stereotype.Service;
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.api.SearchRestClient;
 import com.atlassian.jira.rest.client.api.UserRestClient;
+import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.SearchResult;
 import com.atlassian.jira.rest.client.api.domain.User;
 import com.atlassian.util.concurrent.Promise;
-import com.baeldung.jira.persistance.repository.UserLimitRepository;
 
 @Service("userLimitAndNotifyService")
 @PropertySource({ "classpath:jqlquery.properties" })
@@ -31,9 +32,6 @@ public class UserLimitService {
     @Autowired
     UserRestClient userRestClient;
 
-    @Autowired
-    UserLimitRepository userLimitRepository;
-
     public void notifyUsers() throws InterruptedException, ExecutionException {
 
         /**
@@ -44,15 +42,27 @@ public class UserLimitService {
         * notify if it exceeds
         */
         System.out.println(env.getProperty("jql.assaigned.admin"));
-        searchByJQL(env.getProperty("jql.assaigned.admin"));
+
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("jqlquery");
+        for (String jqlQuery : resourceBundle.keySet()) {
+            Promise<SearchResult> searchResults = searchByJQL(env.getProperty(jqlQuery));
+
+            for (Issue issue : searchResults.get()
+                .getIssues()) {
+                String issueStatus = issue.getStatus()
+                    .getName();
+                System.out.println("Issues assinned to " + issue.getAssignee()
+                    .getName() + "  in state " + issueStatus);
+            }
+            System.out.println();
+
+        }
 
     }
 
-    public void searchByJQL(String jql) throws InterruptedException, ExecutionException {
+    public Promise<SearchResult> searchByJQL(String jql) throws InterruptedException, ExecutionException {
 
-        Promise<SearchResult> searchResults = searchRestClient.searchJql(jql);
-        System.out.println("search results" + searchResults.get()
-            .getTotal());
+        return searchRestClient.searchJql(jql);
 
     }
 
