@@ -3,6 +3,7 @@ package com.baeldung.jira.service;
 import java.util.concurrent.ExecutionException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.atlassian.util.concurrent.Promise;
 import com.baeldung.jira.persistance.repository.UserLimitRepository;
 
 @Service("userLimitAndNotifyService")
+@PropertySource({ "classpath:jqlquery.properties" })
 public class UserLimitService {
 
     @Autowired
@@ -34,22 +36,17 @@ public class UserLimitService {
 
     public void notifyUsers() throws InterruptedException, ExecutionException {
 
-        /**
-         * TODO.
-         * Get results from REST Client 
-         * Iterate and get priorities 
-         * based on priorties from H2 get rating and sum for the user and notify it exceeds limit.
-         */
-        System.out.println("Total number of Users registered :" + userLimitRepository.findAll()
-            .size());
+       /**
+        * TODO
+        * Read all JQL queries 
+        * for each query compute the rating (get ratings from StatusRating table)
+        * based on the user get his limit and compare.
+        * notify if it exceeds
+        */
+        System.out.println(env.getProperty("jql.assaigned.admin"));
+        searchByJQL(env.getProperty("jql.assaigned.admin"));
 
-        searchByJQL(env.getProperty("query.assaigned.admin"));
 
-        User user = getRestUser("rajaneeshm");
-
-        System.out.println(user.getName() + "    " + user.getEmailAddress());
-
-        System.out.println("Total number of Users registered :" + userLimitRepository.count());
     }
 
     public void searchByJQL(String jql) throws InterruptedException, ExecutionException {
