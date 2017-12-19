@@ -18,30 +18,30 @@ import com.baeldung.jira.service.UserLimitService;
 @SpringBootTest(classes = { JiraAutomationApplication.class, UserLimitService.class })
 public class JiraAutomationApplicationTests {
 
-    @Autowired
-    UserLimitService userLimitService;
+	@Autowired
+	UserLimitService userLimitService;
 
-    @Autowired
-    MyJiraClient myJiraClient;
+	@Autowired
+	MyJiraClient myJiraClient;
 
-    @Test
-    public void contextLoads() {
-        Assert.assertNotNull(userLimitService);
-        Assert.assertNotNull(myJiraClient);
-    }
+	@Test
+	public void contextLoads() {
+		Assert.assertNotNull(userLimitService);
+		Assert.assertNotNull(myJiraClient);
+	}
 
-    @Test
-    public void loadJiraUserTest() {
-        User jiraUser = userLimitService.getRestUser("rajaneeshm");
-        Assert.assertEquals(jiraUser.getEmailAddress(), "rajaneesh72@gmail.com");
+	@Test
+	public void loadJiraUserTest() {
+		User jiraUser = userLimitService.getRestUser("rajaneeshm");
+		Assert.assertEquals(jiraUser.getEmailAddress(), "rajaneesh72@gmail.com");
 
-        try {
-            userLimitService.notifyUsers();
-        } catch (InterruptedException | ExecutionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+		try {
+			userLimitService.notifyUsers();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-    }
+	}
 
 }
