@@ -1,4 +1,4 @@
-package com.baeldung.JiraAutomation;
+package com.baeldung.jira;
 
 import java.net.URI;
 
@@ -15,29 +15,25 @@ import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientF
 @Configuration
 public class MyJiraClient {
 
+    @Autowired
+    Environment env;
 
-	@Autowired
-	Environment env;
-	
-	JiraRestClient jiraRestClient;
-	
-	@Bean 
+    JiraRestClient jiraRestClient;
+
+    @Bean
     public JiraRestClient jiraRestClient() {
-        this.jiraRestClient = new AsynchronousJiraRestClientFactory()
-          .createWithBasicHttpAuthentication(URI.create(env.getProperty("jira.url")), env.getProperty("jira.username"), env.getProperty("jira.password"));
+        this.jiraRestClient = new AsynchronousJiraRestClientFactory().createWithBasicHttpAuthentication(URI.create(env.getProperty("jira.url")), env.getProperty("jira.username"), env.getProperty("jira.password"));
         return jiraRestClient;
     }
-	
-	@Bean
-	 SearchRestClient searchRestClient(){
-		return jiraRestClient.getSearchClient();
-	}
-	
-	@Bean
-	UserRestClient userRestClient(){
-		return jiraRestClient.getUserClient();
-	}
 
-    
-    
+    @Bean
+    SearchRestClient searchRestClient() {
+        return jiraRestClient.getSearchClient();
+    }
+
+    @Bean
+    UserRestClient userRestClient() {
+        return jiraRestClient.getUserClient();
+    }
+
 }
