@@ -37,8 +37,9 @@ public class JiraAutomationApplicationTests {
     public void loadJiraUserTest() {
         User jiraUser = userLimitService.getRestUser("rajaneeshm");
         Assert.assertEquals(jiraUser.getEmailAddress(), "rajaneesh72@gmail.com");
-        // TaskStatusRating taskStatusRating = taskStatusRatingRepository.findByTaskStage("In Progress");
-        Assert.assertEquals(taskStatusRatingRepository.count(), 1);
+        TaskStatusRating taskStatusRating = taskStatusRatingRepository.findByTaskStage("In Progress");
+        Assert.assertEquals("In Progress", taskStatusRating.getTaskStage());
+        Assert.assertEquals(1,taskStatusRatingRepository.findAll().size());
 
     }
 
