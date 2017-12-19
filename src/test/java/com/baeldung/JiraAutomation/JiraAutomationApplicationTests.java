@@ -29,7 +29,7 @@ public class JiraAutomationApplicationTests {
 
     @Autowired
     TaskStatusRatingRepository taskStatusRatingRepository;
-    
+
     @Autowired
     UserLimitRepository userLimitRepository;
 
@@ -45,11 +45,13 @@ public class JiraAutomationApplicationTests {
         Assert.assertEquals(jiraUser.getEmailAddress(), "rajaneesh72@gmail.com");
         TaskStatusRating taskStatusRating = taskStatusRatingRepository.findByTaskStage("In Progress");
         Assert.assertEquals("In Progress", taskStatusRating.getTaskStage());
-        Assert.assertEquals(1,taskStatusRatingRepository.findAll().size());
-        
+        Assert.assertEquals(1, taskStatusRatingRepository.findAll()
+            .size());
+
         userLimitService.getRestUser("rajaneeshm");
-        Assert.assertEquals(1,userLimitRepository.findAll().size());
-        
+        Assert.assertEquals(1, userLimitRepository.findAll()
+            .size());
+
         try {
             userLimitService.notifyUsers();
         } catch (InterruptedException | ExecutionException e) {

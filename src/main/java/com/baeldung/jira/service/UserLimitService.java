@@ -36,7 +36,7 @@ public class UserLimitService {
 
     public void notifyUsers() throws InterruptedException, ExecutionException {
 
-       /**
+        /**
         * TODO
         * Read all JQL queries 
         * for each query compute the rating (get ratings from StatusRating table)
@@ -45,7 +45,6 @@ public class UserLimitService {
         */
         System.out.println(env.getProperty("jql.assaigned.admin"));
         searchByJQL(env.getProperty("jql.assaigned.admin"));
-
 
     }
 

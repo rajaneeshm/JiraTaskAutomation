@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user_limit")
+@Table(name = "user_limit")
 public class UserLimit {
 
     @Id
@@ -33,6 +33,5 @@ public class UserLimit {
     public void setUserLimit(double userLimit) {
         this.userLimit = userLimit;
     }
-    
-    
+
 }

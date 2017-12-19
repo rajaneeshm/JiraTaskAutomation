@@ -33,6 +33,5 @@ public class TaskStatusRating {
     public void setRating(Double rating) {
         this.rating = rating;
     }
-    
-    
+
 }
