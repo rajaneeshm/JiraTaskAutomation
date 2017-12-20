@@ -8,7 +8,9 @@ Running the application:
 
 
 properties :
-################ JIRA Confuguration ############################
+
+###### JIRA Confuguration ########
+
 jira.username = JIRA Username
 
 jira.password = Password
@@ -16,7 +18,7 @@ jira.password = Password
 jira.url = http://team.company.com
 
 
-################### JavaMail Configuration ##########################
+###### JavaMail Configuration ########
 
 spring.mail.username=gmail
 
