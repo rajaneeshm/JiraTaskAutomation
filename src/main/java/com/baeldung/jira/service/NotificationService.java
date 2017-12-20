@@ -19,7 +19,7 @@ public class NotificationService {
     @Autowired
     private JavaMailSender mailSender;
 
-    private SimpleMailMessage constructResetTokenEmail(String userEmail, String userName) {
+    private SimpleMailMessage constructResetTokenEmail(String userEmail, String userName, String fromUser) {
         final String message = "Dear " + userName + " \n Complete your issues as soon as possible we have observed you have more issues";
         return constructEmail("Alert Mail for your JIRA Tasks", message + " \r\n", userName);
     }
@@ -29,13 +29,13 @@ public class NotificationService {
         email.setSubject(subject);
         email.setText(body);
         email.setTo(env.getProperty("support.email"));// (userEmail);
-        email.setFrom(env.getProperty("support.email"));// Jira User Admin
+        email.setFrom(env.getProperty("support.email"));// fromUser
         return email;
     }
 
-    public void notifyUser(String userEmail, String jiraUser) {
+    public void notifyUser(String userEmail, String jiraUser, String fromUser) {
         LOGGER.info("sending notification to user :" + jiraUser);
-        mailSender.send(constructResetTokenEmail(userEmail, jiraUser));
+        mailSender.send(constructResetTokenEmail(userEmail, jiraUser, fromUser));
     }
 
 }

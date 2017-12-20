@@ -63,7 +63,7 @@ public class UserLimitService {
 
             LOGGER.info("Total points to Assaigned user " + jiraUser + " is " + openThreads + "   and His limt is : " + userThreadsLimit.get(jiraUser));
             if (openThreads > userThreadsLimit.get(jiraUser)) {
-                notificationService.notifyUser(userEmail, jiraUser);
+                notificationService.notifyUser(userEmail, jiraUser, getRestUser("admin").getEmailAddress());
             }
         }
 
