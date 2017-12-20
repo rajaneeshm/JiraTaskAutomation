@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.atlassian.jira.rest.client.api.domain.User;
 import com.baeldung.jira.service.GoogleSheetService;
 import com.baeldung.jira.service.UserLimitService;
-import com.google.api.services.sheets.v4.Sheets.Spreadsheets.Get;
+import com.google.api.services.sheets.v4.model.Spreadsheet;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { JiraAutomationApplication.class })
@@ -43,12 +43,10 @@ public class JiraAutomationTest {
 
     @Test
     public void createSpreadSheetTest() throws IOException {
-        String sheetId = "123";
-        googleSheetService.createSpreadSheet(sheetId);
-        Get response = googleSheetService.getSpreadSheet(sheetId);
-        Assert.assertEquals(sheetId, response.getSpreadsheetId());
-        // BatchUpdateSpreadsheetResponse deleteResponse = googleSheetService.deleteSpreadSheet(Integer.valueOf(sheetId));
-        // Assert.assertEquals(sheetId, deleteResponse.getSpreadsheetId());
+        String spreadsheetId = null;
+        Spreadsheet spreadsheet = googleSheetService.createSpreadSheet(spreadsheetId);
+        googleSheetService.writeData(null, spreadsheet.getSpreadsheetId());
+        // BatchUpdateSpreadsheetResponse deleteResponse = googleSheetService.deleteSpreadSheet(spreadsheet.getSpreadsheetId());
     }
 
 }
