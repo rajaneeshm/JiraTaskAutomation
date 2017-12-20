@@ -56,6 +56,10 @@ public class UserLimitService {
                 issue.getAssignee();
                 String issueStatus = issue.getStatus().getName();
                 openThreads += statusRating.get(issueStatus);
+                /**
+                 * TODO , Need to check whether assingnee might be null for any issue?
+                 * in case should I consider assingee as ADMIN?
+                 */
                 jiraUser = issue.getAssignee().getName();
                 userEmail = issue.getAssignee().getEmailAddress();
                 LOGGER.info(issue.getKey() + " assinned to " + issue.getAssignee().getName() + "  in state " + issueStatus);
