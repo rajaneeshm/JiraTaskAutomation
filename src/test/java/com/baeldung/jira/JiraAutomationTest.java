@@ -1,5 +1,6 @@
 package com.baeldung.jira;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 import org.junit.Assert;
@@ -10,9 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.atlassian.jira.rest.client.api.domain.User;
-import com.baeldung.jira.JiraAutomationApplication;
-import com.baeldung.jira.MyJiraClient;
+import com.baeldung.jira.service.GoogleSheetService;
 import com.baeldung.jira.service.UserLimitService;
+import com.google.api.services.sheets.v4.Sheets.Spreadsheets.Get;
+import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetResponse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { JiraAutomationApplication.class })
@@ -23,6 +25,9 @@ public class JiraAutomationTest {
 
     @Autowired
     private MyJiraClient myJiraClient;
+
+    @Autowired
+    GoogleSheetService googleSheetService;
 
     @Test
     public void contextLoads() {
@@ -35,6 +40,16 @@ public class JiraAutomationTest {
         User jiraUser = userLimitService.getRestUser("rajaneeshm");
         Assert.assertEquals(jiraUser.getEmailAddress(), "rajaneesh72@gmail.com");
         userLimitService.notifyUsers();
+    }
+
+    @Test
+    public void createSpreadSheetTest() throws IOException {
+        String sheetId = "123";
+        googleSheetService.createSpreadSheet(sheetId);
+        Get response = googleSheetService.getSpreadSheet(sheetId);
+        Assert.assertEquals(sheetId, response.getSpreadsheetId());
+       // BatchUpdateSpreadsheetResponse deleteResponse = googleSheetService.deleteSpreadSheet(Integer.valueOf(sheetId));
+       // Assert.assertEquals(sheetId, deleteResponse.getSpreadsheetId());
     }
 
 }
