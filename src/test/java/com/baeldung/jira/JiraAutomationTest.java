@@ -14,7 +14,6 @@ import com.atlassian.jira.rest.client.api.domain.User;
 import com.baeldung.jira.service.GoogleSheetService;
 import com.baeldung.jira.service.UserLimitService;
 import com.google.api.services.sheets.v4.Sheets.Spreadsheets.Get;
-import com.google.api.services.sheets.v4.model.BatchUpdateSpreadsheetResponse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = { JiraAutomationApplication.class })
@@ -48,8 +47,8 @@ public class JiraAutomationTest {
         googleSheetService.createSpreadSheet(sheetId);
         Get response = googleSheetService.getSpreadSheet(sheetId);
         Assert.assertEquals(sheetId, response.getSpreadsheetId());
-       // BatchUpdateSpreadsheetResponse deleteResponse = googleSheetService.deleteSpreadSheet(Integer.valueOf(sheetId));
-       // Assert.assertEquals(sheetId, deleteResponse.getSpreadsheetId());
+        // BatchUpdateSpreadsheetResponse deleteResponse = googleSheetService.deleteSpreadSheet(Integer.valueOf(sheetId));
+        // Assert.assertEquals(sheetId, deleteResponse.getSpreadsheetId());
     }
 
 }
