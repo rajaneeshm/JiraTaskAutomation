@@ -19,13 +19,11 @@ jira.url = http://team.company.com
 
 
 ###### JavaMail Configuration ########
-
+```
 spring.mail.username=gmail
-
 spring.mail.password=password
-
 support.email=fromUser@mail.com  (To and from email for testing)
-
+```
 
 Add google auth JSON file in resources folder :
 
